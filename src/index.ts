@@ -1,5 +1,6 @@
 import { Coin } from '@models/coin'
 import { TrackingOrder } from '@models/track/TrackingOrder'
+import * as tasks from '@tasks/index'
 import * as routes from './routes'
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
@@ -17,5 +18,7 @@ createConnection({
   keys.forEach((key: string) => {
     routes[key](bot)
   });
+  tasks.trackingQueue(bot)
+
 })
   .catch(error => console.log(error))

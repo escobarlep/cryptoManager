@@ -1,11 +1,14 @@
 import { FetchCoin, FetchListOfCoins, ListCoins } from '@services/coin'
+import { Logger } from '@services/log/Logger'
 
 export default (bot: any) => {
 
   bot.onText(/\/coin (.+)/, async (msg: any, match: any[]) => {
     const { id } = msg.chat
     bot.sendMessage(id, 'Trabalhando na tua requisição')
-    if (msg.chat.id != 203006280) bot.sendMessage(203006280, `${msg.chat.id} -- ${msg.from.first_name} -- coinRequest: ${msg.text}`)
+    const log = new Logger(bot, id)
+    log.info(`${id} -- ${msg.from.first_name} -- coinRequest: ${msg.text}`)
+
     try {
       if (!match.length) bot.sendMessage(id, 'Use "/coin help" para acessar os comandos')
 
@@ -16,15 +19,13 @@ export default (bot: any) => {
         const listService = new ListCoins()
         const coinString: string = await listService.call(secondArg)
         bot.sendMessage(id, coinString)
-        
         return
       }
       
       const fetchService = new FetchCoin(options)
       const coinString: string = await fetchService.call()
 
-      const a = await bot.sendMessage(id, coinString)
-      bot.pinChatMessage(id, a.message_id)
+      await bot.sendMessage(id, coinString)
 
     } catch (error) {
       console.log(error)

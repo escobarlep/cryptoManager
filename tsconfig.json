@@ -23,6 +23,8 @@
       "@interfaces/*": ["src/interfaces/*"],
       "@models/*": ["src/models/*"],
       "@controllers/*": ["src/controllers/*"],
+      "@tasks/*": ["src/tasks/*"],
+      "@helpers/*": ["src/helpers/*"],
       "@services/*": ["src/services/*"]
     }
   },

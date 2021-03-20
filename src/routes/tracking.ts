@@ -1,12 +1,14 @@
 import { TrackingController } from "@controllers/tracking/TrackingController"
 import { IMessage } from '@interfaces/Telegram'
+import { Logger } from "@services/log/Logger"
 
 export default (bot: any) => {
 
   bot.onText(/\/track (.+)/, async (msg: IMessage, match: any[]) => {
     const { id } = msg.chat
     bot.sendMessage(id, 'Trabalhando na tua requisição')
-    if (id != 203006280) bot.sendMessage(203006280, `${id} -- ${msg.from.first_name} -- coinRequest: ${msg.text}`)
+    const log = new Logger(bot, id)
+    log.info(`${id} -- ${msg.from.first_name} -- coinRequest: ${msg.text}`)
 
     try {
       if (!match.length) bot.sendMessage(id, 'Use "/track help" para acessar os comandos')

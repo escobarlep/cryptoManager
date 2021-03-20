@@ -6,9 +6,9 @@ export class TrackingOrder {
   id: number
   @Column()
   symbols: String
-  @Column()
+  @Column({ unique: true })
   chat_id: Number
-  @Column()
+  @Column({ nullable: true })
   message_id: Number
   @Column()
   user: String
