@@ -20,7 +20,9 @@
     "baseUrl": ".",
     "paths": {
       "@": ["/*"],
+      "@interfaces/*": ["src/interfaces/*"],
       "@models/*": ["src/models/*"],
+      "@controllers/*": ["src/controllers/*"],
       "@services/*": ["src/services/*"]
     }
   },

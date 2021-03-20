@@ -16,14 +16,18 @@ export default (bot: any) => {
         const listService = new ListCoins()
         const coinString: string = await listService.call(secondArg)
         bot.sendMessage(id, coinString)
+        
         return
       }
       
       const fetchService = new FetchCoin(options)
       const coinString: string = await fetchService.call()
 
-      bot.sendMessage(id, coinString)
+      const a = await bot.sendMessage(id, coinString)
+      bot.pinChatMessage(id, a.message_id)
+
     } catch (error) {
+      console.log(error)
       try {
         const fetchService = new FetchListOfCoins()
         const symbols: string = await fetchService.call()

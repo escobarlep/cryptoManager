@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/index.ts",
     "dev": "nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts",
-    "local":"ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/index.ts"
+    "local": "ts-node-dev -r tsconfig-paths/register --respawn --ignore-watch node_modules --no-notify src/index.ts"
   },
   "keywords": [],
   "author": "",

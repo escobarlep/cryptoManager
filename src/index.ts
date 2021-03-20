@@ -1,15 +1,15 @@
 import { Coin } from '@models/coin'
+import { TrackingOrder } from '@models/track/TrackingOrder'
 import * as routes from './routes'
 import 'reflect-metadata'
 import { createConnection } from 'typeorm'
-//import app from './app'
 require('dotenv').config()
 const TelegramBot = require('node-telegram-bot-api')
 const bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true})
 
 createConnection({
   type: 'sqlite',
-  entities: [ Coin ],
+  entities: [ Coin, TrackingOrder ],
   synchronize: true,
   database: process.env.DB_PATH
 }).then(() => {
