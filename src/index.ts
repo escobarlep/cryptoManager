@@ -20,7 +20,6 @@ createConnection({
     routes[key](bot)
   });
   schedule.scheduleJob('*/5 * * * * *', function(){
-    console.log('tasks.trackingQueue(bot)')
     tasks.trackingQueue(bot)
   })
   tasks.trackingQueue(bot)

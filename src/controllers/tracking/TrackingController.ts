@@ -15,9 +15,7 @@ export class TrackingController {
 
   public async addTrackingOrder(msg: IMessage, symbols: string[]) {
     let response: string
-    console.log(symbols)
     const mappedSymbols = symbols.map(symbol => symbol?.toUpperCase()).join(',')
-    console.log(mappedSymbols)
     try {
       this.validateSymbols(symbols)
       await this.checkForAdminPowers(msg.chat.id)
@@ -31,13 +29,13 @@ export class TrackingController {
     } catch (error) {
       response = `Houve um erro na requisição: \nDescrição: ${error.message}`
       if (/SQLITE_CONSTRAINT/.test(error.message)) {
-        this.updateTrackingController({ chat_id: msg.chat.id, symbols: mappedSymbols })
+        this.updateTrackingController({ chat_id: msg.chat.id, symbols: mappedSymbols } as ITrackingOrder)
         response = 'Ordem de rastreio atualizada'
       }
     }
     return this.bot.sendMessage(msg.chat.id, response)
   }
-  updateTrackingController(data) {
+  updateTrackingController(data: ITrackingOrder) {
     const update = new UpdateTrackingOrder()
     update.call(data)
   }
@@ -51,6 +49,7 @@ export class TrackingController {
         if (!idAdmin) throw new TrackingError('no_admin_privileges')
       }  
     } catch (error) {
+      console.log('TrackingController: checkForAdminPowers', error)
       throw new TrackingError('no_admin_privileges')
     }
   }
