@@ -1,6 +1,6 @@
 import { IMessage } from '@interfaces/Telegram'
-import { TrackingOrder } from '@models/track'
-import { AddTrackingOrder } from '@services/track'
+import { ITrackingOrder, TrackingOrder } from '@models/track'
+import { AddTrackingOrder, UpdateTrackingOrder } from '@services/track'
 import { TrackingError } from './TrackingErrors'
 
 export class TrackingController {
@@ -15,11 +15,14 @@ export class TrackingController {
 
   public async addTrackingOrder(msg: IMessage, symbols: string[]) {
     let response: string
+    console.log(symbols)
+    const mappedSymbols = symbols.map(symbol => symbol?.toUpperCase()).join(',')
+    console.log(mappedSymbols)
     try {
       this.validateSymbols(symbols)
       await this.checkForAdminPowers(msg.chat.id)
       const order = new TrackingOrder()
-      order.symbols = symbols.map(symbol => symbol?.toUpperCase()).join(',')
+      order.symbols = mappedSymbols
       order.chat_id = msg.chat.id
       order.user = msg.from.username
       const addService = new AddTrackingOrder()
@@ -27,8 +30,16 @@ export class TrackingController {
       response = 'Ordem de rastreio criada'
     } catch (error) {
       response = `Houve um erro na requisição: \nDescrição: ${error.message}`
+      if (/SQLITE_CONSTRAINT/.test(error.message)) {
+        this.updateTrackingController({ chat_id: msg.chat.id, symbols: mappedSymbols })
+        response = 'Ordem de rastreio atualizada'
+      }
     }
     return this.bot.sendMessage(msg.chat.id, response)
+  }
+  updateTrackingController(data) {
+    const update = new UpdateTrackingOrder()
+    update.call(data)
   }
 
   private async checkForAdminPowers(id: Number) {

@@ -1,28 +1,28 @@
 export interface IMessage {
-  message_id: Number
+  message_id: number
   from: IFrom
   chat: IChat
-  date: Number
-  text: String
+  date: number
+  text: string
   entities: IEntity[]
 }
 
 export interface IEntity { 
-  offset: Number,
-  length: Number,
-  type: String
+  offset: number,
+  length: number,
+  type: string
 }
 
 export interface IFrom {
-  id: Number
-  is_bot: Boolean
-  first_name: String
-  username: String
-  language_code: String
+  id: number
+  is_bot: boolean
+  first_name: string
+  username: string
+  language_code: string
 }
 export interface IChat {
-  id: Number
-  title: String
-  type: String
-  all_members_are_administrators: Boolean
+  id: number
+  title: string
+  type: string
+  all_members_are_administrators: boolean
 }

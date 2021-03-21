@@ -5,13 +5,13 @@ export class TrackingOrder {
   @PrimaryGeneratedColumn()
   id: number
   @Column()
-  symbols: String
+  symbols: string
   @Column({ unique: true })
-  chat_id: Number
+  chat_id: number
   @Column({ nullable: true })
-  message_id: Number
+  message_id: number
   @Column()
-  user: String
+  user: string
   @Column()
   createdAt: Date
   @Column()

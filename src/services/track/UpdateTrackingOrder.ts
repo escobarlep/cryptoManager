@@ -7,13 +7,15 @@ export default class UpdateTrackingOrder {
     this._repo = getRepository(TrackingOrder)
   }
   async call(data: ITrackingOrder) {
-    const { chat_id, message_id } = data
-    const order = await this._repo.find({where: { chat_id, message_id }})
+    const { chat_id, symbols, message_id } = data
+    const order = await this._repo.findOne({where: { chat_id }})
     if (!order) throw new Error('error_tracking_not_found')
-
-    order.symbols = data.symbols
-    order.user = data.user
+    console.log(order)
+    if(message_id) order.message_id = message_id
+    if(symbols) order.symbols = symbols
     order.updatedAt = new Date()
+    console.log('after', order)
+
     await this._repo.save(order)
 
     return order

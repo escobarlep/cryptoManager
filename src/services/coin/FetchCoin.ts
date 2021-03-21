@@ -13,22 +13,27 @@ export default class FetchCoin {
   }
   async call(): Promise<string> {
     const { data } = await this._http.get(this._baseUrl)
-    if (data.message !== 'Success') throw new Error('error_fetching_data');
-    const persistData = new AddCoinRegister()
-    persistData
-      .call(data.data)
-      .catch(console.error)
+    if (data?.message === 'Success') {
+      const persistData = new AddCoinRegister()
+      persistData
+        .call(data.data)
+        .catch(console.error)
 
-    return this.parseResponse(data.data)
+      return this.parseResponse(data.data)
+    } else throw new Error('error_fetching_data');
   }
   private parseResponse(coin: ICoin): string {
-    const responseString = `
-      \nMoeda: ${coin.symbol}
+    const newDate = new Date()
+    const hours = newDate.toTimeString().split(' ')[0]
+    const date = (new Intl.DateTimeFormat('pt-br')).format(newDate)
+    let responseString = `
+\nData: ${date} ${hours}
+\nMoeda: ${coin.symbol}
 (24h) Máxima: ${coin.high24h}
 (24h) Mínima: ${coin.low24h}
 Preço Atual: ${coin.lastPrice}
 Variação: ${ ((Number(coin.lastPrice) * 100 / Number(coin.low24h)) - 100).toFixed(2) }%
-    `
+`
     return responseString
   }
 }
