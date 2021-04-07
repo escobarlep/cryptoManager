@@ -35,6 +35,7 @@ export class TrackingController {
     }
     return this.bot.sendMessage(msg.chat.id, response)
   }
+
   updateTrackingController(data: ITrackingOrder) {
     const update = new UpdateTrackingOrder()
     update.call(data)

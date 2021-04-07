@@ -6,21 +6,21 @@ export class Coin {
   id: number
   @Column()
   symbol: String
-  @Column()
+  @Column({ nullable: true })
   ask: Number
-  @Column()
+  @Column({ nullable: true })
   baseVolume24h: Number
-  @Column()
+  @Column({ nullable: true })
   bid: Number
-  @Column()
+  @Column({ nullable: true })
   high24h: Number
-  @Column()
+  @Column({ nullable: true })
   lastPrice: Number
-  @Column()
+  @Column({ nullable: true })
   low24h: Number
-  @Column()
+  @Column({ nullable: true })
   open24h: Number
-  @Column()
+  @Column({ nullable: true })
   quoteVolume24h: Number
   @Column()
   createdAt: Date

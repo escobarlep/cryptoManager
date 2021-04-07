@@ -12,6 +12,7 @@ export class Logger {
 
   info(msg: string){
     if (this.idForLogginChat === this.chatIdOrigem) return
+    console.log(msg)
     this.bot.sendMessage(this.idForLogginChat, msg)
   }
 }
