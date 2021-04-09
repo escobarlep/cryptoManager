@@ -24,5 +24,4 @@ export class Coin {
   quoteVolume24h: Number
   @Column()
   createdAt: Date
-
 }

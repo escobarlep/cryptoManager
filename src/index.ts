@@ -1,4 +1,5 @@
 import { Coin } from '@models/coin'
+import { FetchAvailableCoins } from '@services/coin'
 import { TrackingOrder } from '@models/track/TrackingOrder'
 import * as tasks from '@tasks/index'
 import * as routes from './routes'
@@ -23,7 +24,8 @@ createConnection({
     tasks.trackingQueue(bot)
   })
   tasks.trackingQueue(bot)
-
+  const service = new FetchAvailableCoins()
+  service.call()
 
 })
   .catch(error => console.log(error))
